@@ -228,11 +228,11 @@ resource "kubernetes_deployment" "webapp" {
           }
           env {
             name  = "NEXT_PUBLIC_API_URL"
-            value = "https://dev.talecompendiumcloud.com/api"
+            value = "http://${var.minikube_ip}:5000/api"
           }
           env {
             name  = "NEXT_PUBLIC_WEBAPP_URL"
-            value = "https://dev.talecompendiumcloud.com"
+            value = "http://${var.minikube_ip}:3000"
           }
         }
       }
