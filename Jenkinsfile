@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        MINIKUBE_IP = sh(script: 'minikube ip', returnStdout: true).trim()
+        MINIKUBE_IP = sh(script: 'docker inspect -f "{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}" minikube', returnStdout: true).trim()
     }
     stages {
         stage('Checkout Code') {
