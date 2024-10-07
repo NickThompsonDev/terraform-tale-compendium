@@ -10,11 +10,12 @@ pipeline {
                     // Download and install Terraform if not available
                     sh """
                     if ! [ -x "\$(command -v terraform)" ]; then
-                      echo "Terraform not found, installing..."
-                      curl -LO https://releases.hashicorp.com/terraform/1.5.4/terraform_1.5.4_linux_amd64.zip
-                      unzip -o terraform_1.5.4_linux_amd64.zip
-                      sudo mv terraform /usr/local/bin/
-                      rm terraform_1.5.4_linux_amd64.zip
+                    echo "Terraform not found, installing..."
+                    curl -LO https://releases.hashicorp.com/terraform/1.5.4/terraform_1.5.4_linux_amd64.zip
+                    mkdir -p /tmp/terraform-install
+                    unzip -o terraform_1.5.4_linux_amd64.zip -d /tmp/terraform-install
+                    sudo mv /tmp/terraform-install/terraform /usr/local/bin/terraform
+                    rm -rf /tmp/terraform-install terraform_1.5.4_linux_amd64.zip
                     fi
                     """
                 }
@@ -26,7 +27,6 @@ pipeline {
                 git url: 'https://github.com/NickThompsonDev/terraform-tale-compendium.git', branch: 'master'
             }
         }
-
         stage('Terraform Init') {
             steps {
                 dir('terraform/local') {
