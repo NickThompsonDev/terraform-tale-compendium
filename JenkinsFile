@@ -1,0 +1,52 @@
+pipeline {
+    agent any
+    environment {
+        MINIKUBE_IP = sh(script: 'minikube ip', returnStdout: true).trim()
+    }
+    stages {
+        stage('Checkout Code') {
+            steps {
+                // Checkout the Terraform repository
+                git url: 'https://github.com/NickThompsonDev/terraform-tale-compendium.git', branch: 'master'
+            }
+        }
+
+        stage('Terraform Init') {
+            steps {
+                dir('terraform/local') {
+                    // Initialize Terraform
+                    sh 'terraform init'
+                }
+            }
+        }
+
+        stage('Terraform Plan') {
+            steps {
+                dir('terraform/local') {
+                    // Generate and show Terraform plan
+                    sh 'terraform plan -var="minikube_ip=${MINIKUBE_IP}"'
+                }
+            }
+        }
+
+        stage('Terraform Apply') {
+            steps {
+                dir('terraform/local') {
+                    // Apply the changes to the Minikube cluster
+                    sh 'terraform apply -auto-approve -var="minikube_ip=${MINIKUBE_IP}"'
+                }
+            }
+        }
+    }
+    post {
+        always {
+            echo 'Terraform pipeline finished.'
+        }
+        success {
+            echo 'Terraform applied successfully!'
+        }
+        failure {
+            echo 'Terraform failed to apply.'
+        }
+    }
+}
