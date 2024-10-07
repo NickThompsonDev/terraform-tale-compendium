@@ -76,6 +76,9 @@ pipeline {
                             terraform plan \
                               -target=kubernetes_deployment.webapp \
                               -var="minikube_ip=${MINIKUBE_IP}" \
+                              -var="DATABASE_USER=${DATABASE_USER}" \
+                              -var="DATABASE_PASSWORD=${DATABASE_PASSWORD}" \
+                              -var="DATABASE_NAME=${DATABASE_NAME}" \
                               -var="NEXT_PUBLIC_WEBAPP_URL=${NEXT_PUBLIC_WEBAPP_URL}" \
                               -var="NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}" \
                               -var="tls_secret_name=${TLS_SECRET_NAME}"
@@ -121,6 +124,9 @@ pipeline {
                             terraform apply -auto-approve \
                               -target=kubernetes_deployment.webapp \
                               -var="minikube_ip=${MINIKUBE_IP}" \
+                              -var="DATABASE_USER=${DATABASE_USER}" \
+                              -var="DATABASE_PASSWORD=${DATABASE_PASSWORD}" \
+                              -var="DATABASE_NAME=${DATABASE_NAME}" \
                               -var="NEXT_PUBLIC_WEBAPP_URL=${NEXT_PUBLIC_WEBAPP_URL}" \
                               -var="NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}" \
                               -var="tls_secret_name=${TLS_SECRET_NAME}"
