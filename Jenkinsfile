@@ -67,6 +67,7 @@ pipeline {
                               -var="DATABASE_PASSWORD=${DATABASE_PASSWORD}" \
                               -var="DATABASE_NAME=${DATABASE_NAME}" \
                               -var="NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}" \
+                              -var="NEXT_PUBLIC_WEBAPP_URL=${NEXT_PUBLIC_WEBAPP_URL}" \
                               -var="tls_secret_name=${TLS_SECRET_NAME}"
                             """
                         } else if (params.SERVICE == 'webapp') {
@@ -76,6 +77,7 @@ pipeline {
                               -target=kubernetes_deployment.webapp \
                               -var="minikube_ip=${MINIKUBE_IP}" \
                               -var="NEXT_PUBLIC_WEBAPP_URL=${NEXT_PUBLIC_WEBAPP_URL}" \
+                              -var="NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}" \
                               -var="tls_secret_name=${TLS_SECRET_NAME}"
                             """
                         } else {
@@ -110,6 +112,7 @@ pipeline {
                               -var="DATABASE_PASSWORD=${DATABASE_PASSWORD}" \
                               -var="DATABASE_NAME=${DATABASE_NAME}" \
                               -var="NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}" \
+                              -var="NEXT_PUBLIC_WEBAPP_URL=${NEXT_PUBLIC_WEBAPP_URL}" \
                               -var="tls_secret_name=${TLS_SECRET_NAME}"
                             """
                         } else if (params.SERVICE == 'webapp') {
@@ -119,6 +122,7 @@ pipeline {
                               -target=kubernetes_deployment.webapp \
                               -var="minikube_ip=${MINIKUBE_IP}" \
                               -var="NEXT_PUBLIC_WEBAPP_URL=${NEXT_PUBLIC_WEBAPP_URL}" \
+                              -var="NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}" \
                               -var="tls_secret_name=${TLS_SECRET_NAME}"
                             """
                         } else {
