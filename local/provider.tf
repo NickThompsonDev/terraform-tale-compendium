@@ -1,5 +1,6 @@
 provider "kubernetes" {
-  host                   = "https://${var.minikube_ip}:8443"  # Minikube Kubernetes API
+  config_path = "/root/.kube/config"  # This should point to the config inside Jenkins container
+  host                   = "https://${MINIKUBE_IP}:8443"  # Minikube Kubernetes API
   client_certificate     = file("/var/lib/minikube/certs/client.crt")
   client_key             = file("/var/lib/minikube/certs/client.key")
   cluster_ca_certificate = file("/var/lib/minikube/certs/ca.crt")
@@ -7,6 +8,6 @@ provider "kubernetes" {
 
 provider "helm" {
   kubernetes {
-    config_path = "/root/.kube/config"
+    config_path = "/root/.kube/config"  # Path inside Jenkins container
   }
 }
