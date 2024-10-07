@@ -4,9 +4,9 @@ pipeline {
         MINIKUBE_IP = sh(script: 'docker inspect -f "{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}" minikube', returnStdout: true).trim()
 
         // Secrets stored in Jenkins Credentials
-        DATABASE_USER = credentials('DATABASE_USER')
+        DATABASE_USER = "user"
         DATABASE_PASSWORD = credentials('DATABASE_PASSWORD')
-        DATABASE_NAME = credentials('DATABASE_NAME')
+        DATABASE_NAME = "mydatabase"
 
         // These will use the Minikube IP
         NEXT_PUBLIC_API_URL = "http://${MINIKUBE_IP}:5000/api"
