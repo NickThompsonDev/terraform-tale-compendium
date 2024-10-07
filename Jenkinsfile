@@ -20,6 +20,7 @@ pipeline {
                 }
             }
         }
+
         stage('Checkout Code') {
             steps {
                 // Checkout the Terraform repository
@@ -54,6 +55,7 @@ pipeline {
             }
         }
     }
+
     post {
         always {
             echo 'Terraform pipeline finished.'
