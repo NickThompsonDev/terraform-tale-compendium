@@ -29,7 +29,7 @@ pipeline {
         }
         stage('Terraform Init') {
             steps {
-                dir('terraform/local') {
+                dir('local') {
                     // Initialize Terraform
                     sh 'terraform init'
                 }
@@ -38,7 +38,7 @@ pipeline {
 
         stage('Terraform Plan') {
             steps {
-                dir('terraform/local') {
+                dir('local') {
                     // Generate and show Terraform plan
                     sh 'terraform plan -var="minikube_ip=${MINIKUBE_IP}"'
                 }
@@ -47,7 +47,7 @@ pipeline {
 
         stage('Terraform Apply') {
             steps {
-                dir('terraform/local') {
+                dir('local') {
                     // Apply the changes to the Minikube cluster
                     sh 'terraform apply -auto-approve -var="minikube_ip=${MINIKUBE_IP}"'
                 }
