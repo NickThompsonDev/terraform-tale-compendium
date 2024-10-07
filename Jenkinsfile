@@ -4,6 +4,22 @@ pipeline {
         MINIKUBE_IP = sh(script: 'docker inspect -f "{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}" minikube', returnStdout: true).trim()
     }
     stages {
+        stage('Install Terraform') {
+            steps {
+                script {
+                    // Download and install Terraform if not available
+                    sh """
+                    if ! [ -x "$(command -v terraform)" ]; then
+                      echo "Terraform not found, installing..."
+                      curl -LO https://releases.hashicorp.com/terraform/1.5.4/terraform_1.5.4_linux_amd64.zip
+                      unzip terraform_1.5.4_linux_amd64.zip
+                      sudo mv terraform /usr/local/bin/
+                      rm terraform_1.5.4_linux_amd64.zip
+                    fi
+                    """
+                }
+            }
+        }
         stage('Checkout Code') {
             steps {
                 // Checkout the Terraform repository
